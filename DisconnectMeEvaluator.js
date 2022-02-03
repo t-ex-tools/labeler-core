@@ -36,3 +36,5 @@ var DisconnectMeEvaluator = function(mParser) {
   };
 
 };
+
+export default DisconnectMeEvaluator;

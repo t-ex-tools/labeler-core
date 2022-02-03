@@ -129,3 +129,5 @@ var EasyListEvaluator = function(mParser) {
     },
   };
 };
+
+export default EasyListEvaluator;

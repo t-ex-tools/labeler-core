@@ -10,3 +10,5 @@ var BlockList = function(mName, url, mEvaluator) {
     isLabeled: (r) => Object.assign(evaluator.isLabeled(r), {blocklist: name}),
   };
 };
+
+export default BlockList;

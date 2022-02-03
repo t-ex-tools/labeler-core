@@ -32,3 +32,5 @@ var DisconnectMeParser = function() {
   };
 
 };
+
+export default DisconnectMeParser;

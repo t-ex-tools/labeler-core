@@ -118,3 +118,5 @@ var EasyListParser = function() {
   };
 
 };
+
+export default EasyListParser;

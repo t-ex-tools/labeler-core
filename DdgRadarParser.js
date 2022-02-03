@@ -15,3 +15,5 @@ var DdgRadarParser = function() {
   };
 
 };
+
+export default DdgRadarParser;

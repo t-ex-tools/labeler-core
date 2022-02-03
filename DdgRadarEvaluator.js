@@ -48,3 +48,5 @@ var DdgRadarEvaluator = function(mParser) {
   };
 
 };
+
+export default DdgRadarEvaluator;
