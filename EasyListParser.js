@@ -43,7 +43,7 @@ var EasyListParser = function() {
       .map((rule, i) => {
         let pRule = rule.split("$");        
         let options = parseOptions(pRule[1]);
-        regExp = toRegExp(pRule[0], (options && options["match-case"]));
+        let regExp = toRegExp(pRule[0], (options && options["match-case"]));
 
         indexByUrl(pRule[0], i, "||", index);
         indexByUrl(pRule[0], i, "@@||", exceptionIndex);

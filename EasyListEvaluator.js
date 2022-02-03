@@ -74,9 +74,9 @@ var EasyListEvaluator = function(mParser) {
     
     isLabeled: function(r) {    
 
-      for (isException of [true, false]) {
+      for (let isException of [true, false]) {
         let indexes = parser.index(new URL(r.url).hostname, isException); // covers byException() & byDomain() -> super fast
-        for (i of indexes) {
+        for (let i of indexes) {
           let rule = parser.rules(i);
           let optionsResult = (rule.options) ? testOptions(r, rule) : true;
           if (rule.parsedRule.test(r.url) && optionsResult) {
@@ -90,7 +90,7 @@ var EasyListEvaluator = function(mParser) {
         }
       }
 
-      for (rule of parser.byExactDomain()) { // covers byExactDomain() -> slow but neglectable 
+      for (let rule of parser.byExactDomain()) { // covers byExactDomain() -> slow but neglectable 
         let optionsResult = (rule.options) ? testOptions(r, rule) : true;
         if (rule.parsedRule.test(r.url) && optionsResult) {
           return {
@@ -102,7 +102,7 @@ var EasyListEvaluator = function(mParser) {
         } 
       }      
 
-      for (addrPartRule of parser.byAddressPart()) { // covers byAddressPart() -> super slow
+      for (let addrPartRule of parser.byAddressPart()) { // covers byAddressPart() -> super slow
         let partToCheck = (addrPartRule.rule.includes("*")) ?
           addrPartRule.rule.split("*")[0] :
           addrPartRule.rule;

@@ -1,13 +1,10 @@
-var BlockList = function(mName, url, mEvaluator) {
+var BlockList = function(mName, rawList, mEvaluator) {
   let name = mName;
   let evaluator = mEvaluator;
-
-  fetch(url)
-    .then((res) => res.text())
-    .then((list) => evaluator.parser().parse(list));
+  evaluator.parser().parse(rawList);
 
   return {
-    isLabeled: (r) => Object.assign(evaluator.isLabeled(r), {blocklist: name}),
+    isLabeled: (r) => Object.assign(evaluator.isLabeled(r), { blocklist: name }),
   };
 };
 
