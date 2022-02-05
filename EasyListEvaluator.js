@@ -83,7 +83,6 @@ var EasyListEvaluator = function(mParser) {
             return {
               isLabeled: !isException,
               rule: rule.rule,
-              request: r,
               type: (isException) ? "byException" : "byDomain",
             };
           }
@@ -96,7 +95,6 @@ var EasyListEvaluator = function(mParser) {
           return {
             isLabeled: true,
             rule: rule.rule,
-            request: r,
             type: "byExactDomain"
           };
         } 
@@ -113,7 +111,6 @@ var EasyListEvaluator = function(mParser) {
             return {
               isLabeled: true,
               rule: addrPartRule.rule,
-              request: r,
               type: "byAddressPart"
             };
           }
@@ -123,7 +120,6 @@ var EasyListEvaluator = function(mParser) {
       return {
         isLabeled: false,
         rule: null,
-        request: r,
         type: null,
       };
     },

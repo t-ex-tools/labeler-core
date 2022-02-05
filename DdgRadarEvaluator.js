@@ -19,7 +19,6 @@ var DdgRadarEvaluator = function(mParser) {
         return {
           isLabeled: false,
           rule: null,
-          request: r,
           type: null,
         };        
       }
@@ -32,7 +31,6 @@ var DdgRadarEvaluator = function(mParser) {
               return {
                 isLabeled: true,
                 rule: resource.rule,
-                request: r,
               };
             }
           } catch (err) {
@@ -42,7 +40,6 @@ var DdgRadarEvaluator = function(mParser) {
       return {
         isLabeled: false,
         rule: null,
-        request: r,
       };
     }
   };

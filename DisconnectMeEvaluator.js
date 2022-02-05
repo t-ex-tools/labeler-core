@@ -19,7 +19,6 @@ var DisconnectMeEvaluator = function(mParser) {
         return {
           isLabeled: false,
           rule: null,
-          request: r,
           type: null,
         };        
       }
@@ -29,7 +28,6 @@ var DisconnectMeEvaluator = function(mParser) {
       return {
         isLabeled: res.length > 0,
         rule: (res.length > 0) ? domain: null,
-        request: r,
         type: res,
       };
     }
