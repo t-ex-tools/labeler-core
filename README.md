@@ -25,6 +25,7 @@ let result = labeler.isLabeled([r]);
 # Model: Parser and Evaluator
 
 ![Model the labeler implements](/figures/model.png)
+
 **Figure 1**
 
 To extend the core by additional blocklists, which shall be used in an automated labeling process, adapt the model depicted in *Figure 1*. 
