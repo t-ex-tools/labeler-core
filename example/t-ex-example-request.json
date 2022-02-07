@@ -1,0 +1,121 @@
+{
+  "frameId": 0,
+  "initiator": "https://www.tccd.edu",
+  "method": "GET",
+  "parentFrameId": -1,
+  "requestId": "923027",
+  "tabId": 19696,
+  "timeStamp": 1628773542862.1062,
+  "type": "image",
+  "url": "https://www.tccd.edu/images/feeds/general-announcements/2021-summer-update.jpg",
+  "source": "https://www.tccd.edu/",
+  "complete": true,
+  "requestHeaders": [
+    {
+      "name": "sec-ch-ua",
+      "value": "\"Chromium\";v=\"92\", \" Not A;Brand\";v=\"99\", \"Google Chrome\";v=\"92\""
+    },
+    {
+      "name": "sec-ch-ua-mobile",
+      "value": "?0"
+    },
+    {
+      "name": "User-Agent",
+      "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36"
+    },
+    {
+      "name": "Accept",
+      "value": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8"
+    },
+    {
+      "name": "Sec-Fetch-Site",
+      "value": "same-origin"
+    },
+    {
+      "name": "Sec-Fetch-Mode",
+      "value": "no-cors"
+    },
+    {
+      "name": "Sec-Fetch-Dest",
+      "value": "image"
+    },
+    {
+      "name": "Referer",
+      "value": "https://www.tccd.edu/"
+    },
+    {
+      "name": "Accept-Encoding",
+      "value": "gzip, deflate, br"
+    },
+    {
+      "name": "Accept-Language",
+      "value": "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7"
+    },
+    {
+      "name": "Cookie",
+      "value": "ASP.NET_SessionId=vswxgujnqnbf1sezqogxqpge; SESSION=!FLdi/IiPUTVcMcXTuaH/mFlzbQCGOuiN++09C4nKoLSw3kHO/cr9C1JpBJz1tQeMKoJ6fVyN0U+AHw=="
+    }
+  ],
+  "response": {
+    "frameId": 0,
+    "fromCache": false,
+    "initiator": "https://www.tccd.edu",
+    "ip": "64.28.255.100",
+    "method": "GET",
+    "parentFrameId": -1,
+    "requestId": "923027",
+    "responseHeaders": [
+      {
+        "name": "Cache-Control",
+        "value": "max-age=86400"
+      },
+      {
+        "name": "Content-Type",
+        "value": "image/jpeg"
+      },
+      {
+        "name": "Last-Modified",
+        "value": "Tue, 09 Feb 2021 17:01:46 GMT"
+      },
+      {
+        "name": "Accept-Ranges",
+        "value": "bytes"
+      },
+      {
+        "name": "ETag",
+        "value": "\"89bae43f5ffd61:0\""
+      },
+      {
+        "name": "Server",
+        "value": "Microsoft-IIS/10.0"
+      },
+      {
+        "name": "Access-Control-Allow-Origin",
+        "value": "http://a.cms.omniupdate.com/"
+      },
+      {
+        "name": "X-UA-Compatible",
+        "value": "IE=edge"
+      },
+      {
+        "name": "X-Frame-Options",
+        "value": "ALLOW-FROM omniupdate.com"
+      },
+      {
+        "name": "Date",
+        "value": "Thu, 12 Aug 2021 13:05:37 GMT"
+      },
+      {
+        "name": "Content-Length",
+        "value": "44442"
+      }
+    ],
+    "statusCode": 200,
+    "statusLine": "HTTP/1.1 200 OK",
+    "tabId": 19696,
+    "timeStamp": 1628773543179.2751,
+    "type": "image",
+    "url": "https://www.tccd.edu/images/feeds/general-announcements/2021-summer-update.jpg"
+  },
+  "success": true
+}

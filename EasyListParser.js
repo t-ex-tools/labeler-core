@@ -98,7 +98,7 @@ var EasyListParser = function() {
   return {
     parse: (list) => parseList(list),
 
-    rules: (index) => rules[index],
+    rule: (index) => rules[index],
 
     index: (hostname, isException) => (isException) ? 
       exceptionIndex[hostname] || []

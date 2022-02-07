@@ -77,7 +77,7 @@ var EasyListEvaluator = function(mParser) {
       for (let isException of [true, false]) {
         let indexes = parser.index(new URL(r.url).hostname, isException); // covers byException() & byDomain() -> super fast
         for (let i of indexes) {
-          let rule = parser.rules(i);
+          let rule = parser.rule(i);
           let optionsResult = (rule.options) ? testOptions(r, rule) : true;
           if (rule.parsedRule.test(r.url) && optionsResult) {
             return {
