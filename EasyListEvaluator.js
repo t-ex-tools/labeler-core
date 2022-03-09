@@ -63,6 +63,9 @@ var EasyListEvaluator = function(mParser) {
   let testOptions = (r, rule) => Object
     .keys(rule.options)
     .map((o) => {
+      if (o.length === 0) {
+        return true;
+      }
       let isNegated = o.startsWith("~");
       let option = (isNegated) ? o.slice(1) : o;
       return options[option](r, isNegated, option, rule.options[o])
