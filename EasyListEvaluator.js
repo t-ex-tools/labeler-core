@@ -75,10 +75,17 @@ var EasyListEvaluator = function(mParser) {
   return {
     parser: () => parser,
     
-    isLabeled: function(r) {    
+    isLabeled: function(r) {
+      let host;
+      try {
+        host = new URL(r.url).hostname;
+      } catch(err) {
+        console.debug(r.url + " invalid. Data point skipped.");
+        return;
+      }
 
       for (let isException of [true, false]) {
-        let indexes = parser.index(new URL(r.url).hostname, isException); // covers byException() & byDomain() -> super fast
+        let indexes = parser.index(host, isException); // covers byException() & byDomain() -> super fast
         for (let i of indexes) {
           let rule = parser.rule(i);
           let optionsResult = (rule.options) ? testOptions(r, rule) : true;
