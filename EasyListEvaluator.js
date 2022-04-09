@@ -81,7 +81,11 @@ var EasyListEvaluator = function(mParser) {
         host = new URL(r.url).hostname;
       } catch(err) {
         console.debug(r.url + " invalid. Data point skipped.");
-        return;
+        return {
+          isLabeled: false,
+          rule: null,
+          type: null
+        };
       }
 
       for (let isException of [true, false]) {
