@@ -23,7 +23,7 @@ var EasyListEvaluator = function(mParser) {
     "other": checkType,
     "domain": (r, isNegated, option, attrs) => {
       try {
-        let hostname = new URL(r.source).hostname;
+        let hostname = new URL(r.params.source).hostname;
         return attrs
           // TODO: check!
           .map((domain) => (domain.startsWith("~")) ?
@@ -31,6 +31,7 @@ var EasyListEvaluator = function(mParser) {
             hostname.indexOf(domain) > -1)
           .reduce((acc, val) => acc || val, false);
       } catch (err) {
+        // console.debug(r.params.source + " could not be parsed as an URL");
         return false;
       }
     },
@@ -39,12 +40,13 @@ var EasyListEvaluator = function(mParser) {
         return isNegated;
       }
       try {
-        let source = new URL(r.source);
-        let target = new URL(r.url);
+        let source = new URL(r.params.source);
+        let target = new URL(r.params.target);
         return (isNegated) ? 
           source.hostname === target.hostname
           : source.hostname !== target.hostname;
       } catch (err) {
+        // console.debug(r.params.source + " could not be parsed as an URL");
         return false;
       }
     },    
@@ -78,9 +80,9 @@ var EasyListEvaluator = function(mParser) {
     isLabeled: function(r) {
       let host;
       try {
-        host = new URL(r.url).hostname;
+        host = new URL(r.params.target).hostname;
       } catch(err) {
-        console.debug(r.url + " invalid. Data point skipped.");
+        console.debug(r.params.target + " invalid. Data point skipped.");
         return {
           isLabeled: false,
           rule: null,
@@ -93,7 +95,7 @@ var EasyListEvaluator = function(mParser) {
         for (let i of indexes) {
           let rule = parser.rule(i);
           let optionsResult = (rule.options) ? testOptions(r, rule) : true;
-          if (rule.parsedRule.test(r.url) && optionsResult) {
+          if (rule.parsedRule.test(r.params.target) && optionsResult) {
             return {
               isLabeled: !isException,
               rule: rule.rule,
@@ -105,7 +107,7 @@ var EasyListEvaluator = function(mParser) {
 
       for (let rule of parser.byExactDomain()) { // covers byExactDomain() -> slow but neglectable 
         let optionsResult = (rule.options) ? testOptions(r, rule) : true;
-        if (rule.parsedRule.test(r.url) && optionsResult) {
+        if (rule.parsedRule.test(r.params.target) && optionsResult) {
           return {
             isLabeled: true,
             rule: rule.rule,
@@ -120,8 +122,8 @@ var EasyListEvaluator = function(mParser) {
           addrPartRule.rule;
         
         let optionsResult = (addrPartRule.options) ? testOptions(r, addrPartRule) : true;
-        if (r.url.includes(partToCheck)) {
-          if (addrPartRule.parsedRule.test(r.url) && optionsResult) {
+        if (r.params.target.includes(partToCheck)) {
+          if (addrPartRule.parsedRule.test(r.params.target) && optionsResult) {
             return {
               isLabeled: true,
               rule: addrPartRule.rule,
