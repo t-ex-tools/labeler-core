@@ -18,8 +18,8 @@ var DisconnectMeEvaluator = function(mParser) {
       if (!isThirdParty(r)) {
         return {
           isLabeled: false,
-          rule: null,
-          type: null,
+          rule: undefined,
+          type: undefined,
         };        
       }
 
@@ -27,7 +27,7 @@ var DisconnectMeEvaluator = function(mParser) {
       let res = parser.rule(domain);
       return {
         isLabeled: res.length > 0,
-        rule: (res.length > 0) ? domain: null,
+        rule: (res.length > 0) ? domain: undefined,
         type: res,
       };
     }

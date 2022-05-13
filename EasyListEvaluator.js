@@ -85,8 +85,8 @@ var EasyListEvaluator = function(mParser) {
         console.debug(r.params.target + " invalid. Data point skipped.");
         return {
           isLabeled: false,
-          rule: null,
-          type: null
+          rule: undefined,
+          type: undefined
         };
       }
 
@@ -135,8 +135,8 @@ var EasyListEvaluator = function(mParser) {
 
       return {
         isLabeled: false,
-        rule: null,
-        type: null,
+        rule: undefined,
+        type: undefined,
       };
     },
   };

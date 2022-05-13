@@ -18,8 +18,8 @@ var DdgRadarEvaluator = function(mParser) {
       if (!isThirdParty(r)) {
         return {
           isLabeled: false,
-          rule: null,
-          type: null,
+          rule: undefined,
+          type: undefined,
         };        
       }
 
@@ -39,7 +39,8 @@ var DdgRadarEvaluator = function(mParser) {
       }
       return {
         isLabeled: false,
-        rule: null,
+        rule: undefined,
+        type: undefined
       };
     }
   };
