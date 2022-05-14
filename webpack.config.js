@@ -7,8 +7,8 @@ module.exports = {
     filename: "main.js",
     path: path.resolve(__dirname, "dist"),
     library: {
-      name: "labeler-core",
-      type: "commonjs2"
+      name: "Labeler",
+      type: "var"
     },
   },
 };

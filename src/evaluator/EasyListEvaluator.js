@@ -3,7 +3,6 @@ import psl from "psl";
 
 export default function (mParser) {
   let parser = new mParser();
-  let cache = {};
 
   const urlOptions = { 
     protocols: ["http", "https"], 
@@ -88,16 +87,48 @@ export default function (mParser) {
     })
     .reduce((acc, val) => acc && val, true);
 
+  let cache = { noMatch: {}};
+
+  let toCache = (url, param) => {
+    if (!cache[url]) {
+      cache[url] = [];
+    }
+    cache[url].push(param);
+    return param.result;
+  }
+
+  let fromCache = (url) => {
+    if (cache[url]) {
+      return cache[url];
+    } else {
+      return [];
+    }
+  };
+
+  const noMatch = {
+    isLabeled: false,
+    rule: undefined,
+    type: "404: No matching rule",
+  };
+
   return {
     parser: () => parser,
 
     isLabeled: function (params) {
-      if (!validator.isURL(new String(params.url), urlOptions)) {
-        return {
-          isLabeled: false,
-          rule: undefined,
-          type: "500: No target URL"
-        };        
+
+      if (cache.noMatch[params.url]) {
+        return noMatch;
+      }
+
+      // cached rules
+      for (let item of fromCache(params.url)) {
+        let optionsResult = (item.rule.options) 
+          ? testOptions(params, item.rule) 
+          : true;
+
+        if (item.rule.parsedRule.test(params.url) && optionsResult) {
+          return item.result;
+        }
       }
       
       // covers byException() & byDomain() -> super fast
@@ -111,13 +142,16 @@ export default function (mParser) {
             : true;
 
           if (rule.parsedRule.test(params.url) && optionsResult) {
-            return {
-              isLabeled: !isException,
-              rule: rule.rule,
-              type: (isException) 
-                ? "byException" 
-                : "byDomain",
-            };
+            return toCache(params.url, { 
+              rule: rule, 
+              result: {
+                isLabeled: !isException,
+                rule: rule.rule,
+                type: (isException) 
+                  ? "200: Exception rule" 
+                  : "201: Domain rule",
+              }
+            });
           }
         }
       }
@@ -129,11 +163,14 @@ export default function (mParser) {
           : true;
 
         if (rule.parsedRule.test(params.url) && optionsResult) {
-          return {
-            isLabeled: true,
-            rule: rule.rule,
-            type: "byExactDomain"
-          };
+          return toCache(params.url, {
+            rule: rule,
+            result: {
+              isLabeled: true,
+              rule: rule.rule,
+              type: "202: Exact domain rule"
+            }
+          });
         }
       }
 
@@ -147,20 +184,22 @@ export default function (mParser) {
           ? testOptions(params, addrPartRule) 
           : true;
 
-        if (addrPartRule.parsedRule.test(params.url) && optionsResult) {
-          return {
-            isLabeled: true,
-            rule: addrPartRule.rule,
-            type: "byAddressPart"
-          };
+        if (params.url.includes(partToCheck)) {
+          if (addrPartRule.parsedRule.test(params.url) && optionsResult) {
+            return toCache(params.url, {
+              rule: addrPartRule,
+              result: {
+                isLabeled: true,
+                rule: addrPartRule.rule,
+                type: "203: Address part"
+              }
+            });
+          }
         }
       }
 
-      return {
-        isLabeled: false,
-        rule: undefined,
-        type: "404: No matching rule",
-      };
+      cache.noMatch[params.url] = true;
+      return noMatch;
     },
   };
 };
