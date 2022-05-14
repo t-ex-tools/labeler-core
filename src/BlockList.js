@@ -1,4 +1,4 @@
-var BlockList = function(mName, rawList, mEvaluator) {
+export default function(mName, rawList, mEvaluator) {
   let evaluator = mEvaluator;
   evaluator.parser().parse(rawList);
 

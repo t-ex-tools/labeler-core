@@ -1,4 +1,4 @@
-var DisconnectMeParser = function() {
+export default function() {
   let rules = {};
 
   return {

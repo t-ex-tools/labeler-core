@@ -1,0 +1,31 @@
+{
+  "name": "labeler-core",
+  "version": "1.0.0",
+  "description": "Core of the labeling component of T.EX, which provides a generic interface to other components. The core implements a data model to easily extend it by additional blocklists.",
+  "main": "./src/index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "build": "npx webpack --config webpack.config.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/t-ex-tools/labeler-core.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/t-ex-tools/labeler-core/issues"
+  },
+  "homepage": "https://github.com/t-ex-tools/labeler-core#readme",
+  "devDependencies": {
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.9.2"
+  },
+  "dependencies": {
+    "psl": "^1.8.0",
+    "validator": "^13.7.0"
+  }
+}

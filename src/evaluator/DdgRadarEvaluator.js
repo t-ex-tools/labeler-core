@@ -1,4 +1,4 @@
-var DdgRadarEvaluator = function(mParser) {
+export default function(mParser) {
   let parser = new mParser();
 
   let isThirdParty = (r) => {

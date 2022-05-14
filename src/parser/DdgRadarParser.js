@@ -1,4 +1,4 @@
-var DdgRadarParser = function() {
+export default function() {
   let rules = {};
 
   return {

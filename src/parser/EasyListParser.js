@@ -1,4 +1,4 @@
-var EasyListParser = function() {
+export default function() {
   let rules = [];
   let index = {err: []};
   let exceptionIndex = {err: []};
