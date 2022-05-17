@@ -1,79 +1,10 @@
-export default function() {
+import symbols from "../static/easylist/symbols.js";
+import types from "../static/easylist/types.json";
+import EasyListIndex from "./EasyListIndex.js";
+
+export default function () {
+  let Indexer = new EasyListIndex();
   let rules = [];
-  let index = {err: []};
-  let exceptionIndex = {err: []};
-
-  const matchAddressPart = /^(?!(\||\@))/;
-  const matchDomain = /^\|\|/
-  const matchExactDomain = /^\|(?!(\|))/
-  const matchException = /^\@\@/;
-  const matchRegExp = /^\/.+\/\$/;
-
-  let indexByUrl = (rule, i, symbol, target) => {
-    if (rule && rule.startsWith(symbol)) {
-      try {
-        if (rule.includes("*")) {
-          throw "error";
-        }
-
-        let url = new URL(encodeURI(rule
-          .replace(symbol, "https://")
-          .replace("^", "")
-        ));
-
-        (target[url.hostname]) ?
-        target[url.hostname].push(i)
-          : target[url.hostname] = [i];
-      } catch(err) {
-        target.err.push(i);
-      }
-    }
-  }
-
-  let parseList = (list) => {
-    rules = list
-      .split("\n")
-      .slice(1)
-      .filter((rule) => !(
-        rule.startsWith("!") ||
-        rule.match(/\#(\@?|\??|\$?)\#/) ||
-        rule.match(matchRegExp) ||
-        rule === ""
-      ))
-      .map((rule, i) => {
-        let pRule = rule.split("$");        
-        let options = parseOptions(pRule[1]);
-        let regExp = toRegExp(pRule[0], (options && options["match-case"]));
-
-        indexByUrl(pRule[0], i, "||", index);
-        indexByUrl(pRule[0], i, "@@||", exceptionIndex);
-
-        return {
-          rule: rule,
-          parsedRule: regExp,
-          options: options,
-        };
-      });
-  };
-
-  let parseOptions = (optionsPart) => {
-    let options = (optionsPart) ?
-      optionsPart
-        .split(",")
-        .map((option) => {
-          let kv = option.split("=");
-          let result = {};
-          result[kv[0]] = (kv[1]) ? kv[1].split("|") : [];
-          return result; 
-        })
-        .reduce((acc, val) => {
-          let key = Object.keys(val)[0];
-          acc[key] = val[key];
-          return acc;
-        }, {})
-      : null;
-    return options;
-  };  
 
   // NOTE:  taken from Takano et al.
   //        doi: 10.13052/jsn2445-9739.2017.006
@@ -81,7 +12,7 @@ export default function() {
     return new RegExp(rule
       .replace("@@", "")
       .replace("||", "")
-      .replace(/\*+/g, "*") 
+      .replace(/\*+/g, "*")
       .replace(/\^\|$/, "^")
       .replace(/\W/g, "\\$&")
       .replace(/\\\*/g, ".*")
@@ -95,26 +26,82 @@ export default function() {
     );
   };
 
+  let isType = (o) =>
+    (o.startsWith("~"))
+      ? types.includes(o.slice(1))
+      : types.includes(o);
+
+  let options = (str) => {
+    let attrs = str.split(",");
+    let typeOpts = attrs.filter(isType);
+    let t = (typeOpts.length > 0)
+      ? "type=" + typeOpts.join("|")
+      : undefined;
+
+    let result = attrs
+      .filter((o) => !isType(o))
+      .concat((t) ? [t] : [])
+      .map((option) => {
+        let kv = option.split("=");
+        let result = {};
+        result[kv[0]] = (kv[1]) ? kv[1].split("|") : [];
+        return result;
+      })
+      .reduce((acc, val) => {
+        let key = Object.keys(val)[0];
+        acc[key] = val[key];
+        return acc;
+      }, {});
+
+    return result;
+  };  
+
+  let parse = (list) => {
+    rules = list
+      .split("\n")
+      .slice(1)
+      .filter((line) => !(
+        line.startsWith(symbols.comment) ||
+        line.includes(symbols.element) ||
+        line.includes(symbols.xelement) ||
+        line.includes(symbols.yelement) ||
+        line.includes(symbols.zelement) ||
+        line === ""
+      ))
+      .map((line, i, arr) => {
+        let optIdx = line.lastIndexOf("$");
+        let rule = (optIdx > -1)
+          ? [line.slice(0, optIdx), line.slice(optIdx + 1)]
+          : [line, undefined];
+
+        let opt = (rule[1])
+          ? options(rule[1])
+          : undefined;
+
+        let regExp = (symbols.regexp.test(rule[0]))
+          ? new RegExp(rule[0])
+          : toRegExp(rule[0], (opt && opt["match-case"]));
+
+        if (!rule[0]) {
+          Indexer.general(i);
+        } else {
+          Indexer.to(rule[0], i);
+        }
+        
+        return {
+          raw: line,
+          parsed: regExp,
+          options: opt,
+        };
+      });
+  };
+  
   return {
-    parse: (list) => parseList(list),
+    parse: (list) => parse(list),
 
     rule: (index) => rules[index],
 
-    index: (hostname, isException) => (isException) ? 
-      exceptionIndex[hostname] || []
-      : index[hostname] || [],
-
-    byAddressPart: () => rules
-      .filter((r) => r.rule.match(matchAddressPart)),
-
-    byDomain: () => rules
-      .filter((r) => r.rule.match(matchDomain)),
-    
-    byExactDomain: () => rules
-      .filter((r) => r.rule.match(matchExactDomain)),
-
-    byException: () => rules
-      .filter((r) => r.rule.match(matchException)),    
+    index: Indexer.from,
   };
 
 };

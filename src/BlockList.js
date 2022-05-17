@@ -4,6 +4,10 @@ export default function(mName, rawList, mEvaluator) {
 
   return {
     name: mName,
-    isLabeled: (r) => Object.assign(evaluator.isLabeled(r), { blocklist: mName }),
+    isLabeled: (r) => 
+      Object.assign(
+        evaluator.isLabeled(r), 
+        { blocklist: mName }
+      ),
   };
 };

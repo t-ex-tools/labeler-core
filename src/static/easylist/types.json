@@ -1,0 +1,14 @@
+[
+  "script",
+  "image",
+  "stylesheet",
+  "object",
+  "subdocument",
+  "xmlhttprequest",
+  "websocket",
+  "webrtc",
+  "font",
+  "ping",
+  "media",
+  "other"
+]
