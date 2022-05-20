@@ -56,19 +56,26 @@ export default function (mParser) {
     return idxs;
   }
 
+  let cacheKey = (params) =>
+    Object.values(params).join("|")
+
   return {
     parser: () => parser,
 
     isLabeled: function (params) {
       let domain = psl.get(new URL(params.url).hostname);
 
-      if (Cacher.hadNoMatch(params.url)) {
-        return noMatch;
+      if (Cacher.hadNoMatch(cacheKey(params))) {
+        let r = { ...noMatch };
+        r.type += " (cached)"
+        return r;
       }
 
       for (let item of Cacher.from(params.url)) {
         if (Tester.rule(params, item.rule)) {
-          return item.result;
+          let r = { ...item.result };
+          r.type += " (cached)";
+          return r;
         }
       }
 
@@ -89,7 +96,7 @@ export default function (mParser) {
         }
       }
 
-      Cacher.foundNoMatch(params.url);
+      Cacher.foundNoMatch(cacheKey(params));
       return noMatch;
     },
   };
