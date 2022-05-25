@@ -28,6 +28,7 @@
     "webpack-cli": "^4.9.2"
   },
   "dependencies": {
+    "@cliqz/adblocker": "^1.23.8",
     "psl": "^1.8.0",
     "validator": "^13.7.0"
   }

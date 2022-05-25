@@ -1,21 +1,27 @@
+import validator from "validator";
+import psl from "psl";
+
 export default function(mParser) {
   let parser = new mParser();
 
-  let isThirdParty = (r) => {
-    try {
-      let source = new URL(r.source);
-      let target = new URL(r.url);
-      return source.hostname !== target.hostname;
-    } catch (err) {
-      return false;
-    }    
-  }  
+  const urlOptions = {
+    protocols: ["http", "https"],
+    require_protocol: true,
+  };
 
   return {
     parser: () => parser,
 
-    isLabeled: (r) => {
-      if (!isThirdParty(r)) {
+    isLabeled: (params) => {
+      let target = psl.get(new URL(params.url).hostname)
+      let source;
+      if (!validator.isURL(new String(params.domain), urlOptions)) {
+        source = undefined;
+      } else {
+        source = psl.get(new URL(params.domain).hostname);
+      }
+
+      if (target !== source) {
         return {
           isLabeled: false,
           rule: undefined,
@@ -23,11 +29,10 @@ export default function(mParser) {
         };        
       }
 
-      let domain = new URL(r.url).hostname.split(".").slice(-2).join("."); // TODO: not properly
-      let res = parser.rule(domain);
+      let res = parser.rule(target);
       return {
         isLabeled: res.length > 0,
-        rule: (res.length > 0) ? domain: undefined,
+        rule: (res.length > 0) ? target : undefined,
         type: res,
       };
     }
