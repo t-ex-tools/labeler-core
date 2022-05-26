@@ -1,5 +1,5 @@
 import validator from "validator";
-import psl from "psl";
+import { getDomain } from "tldjs";
 
 export default function(mParser) {
   let parser = new mParser();
@@ -13,12 +13,12 @@ export default function(mParser) {
     parser: () => parser,
 
     isLabeled: (params) => {
-      let target = psl.get(new URL(params.url).hostname)
+      let target = getDomain(new URL(params.url).hostname)
       let source;
       if (!validator.isURL(new String(params.domain), urlOptions)) {
         source = undefined;
       } else {
-        source = psl.get(new URL(params.domain).hostname);
+        source = getDomain(new URL(params.domain).hostname);
       }
 
       if (target !== source) {
