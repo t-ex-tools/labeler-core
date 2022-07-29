@@ -7,11 +7,8 @@
     "example": "example"
   },
   "scripts": {
-    "build:var": "npx webpack --config webpack.config.var.js",
-    "dev:var": "npx webpack --watch --config webpack.config.var.js",
-    "build:commonjs2": "npx webpack --config webpack.config.commonjs2.js",
-    "dev:commonjs2": "npx webpack --watch --config webpack.config.commonjs2.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npx webpack --config webpack.config.js",
+    "dev": "npx webpack --watch --config webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -30,6 +27,7 @@
   "dependencies": {
     "@cliqz/adblocker": "^1.23.8",
     "tldjs": "^2.3.1",
+    "url": "^0.11.0",
     "validator": "^13.7.0"
   }
 }
