@@ -24,9 +24,15 @@ module.exports = (env) => {
     },
   };
   
+  env.mode = (env.mode) ? env.mode : "development";
+
   let config = {
     entry: "./src/index.js",
-    mode: "production",
+    mode: env.mode,
+    devtool: 'inline-source-map',
+    optimization: {
+      minimize: (env.mode === "production")
+    },
   };
 
   return [
