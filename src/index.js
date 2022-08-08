@@ -4,7 +4,7 @@ import AdBlockParser from "./parser/AdBlockParser.js";
 import AdBlockEvaluator from "./evaluator/AdBlockEvaluator.js";
 import BlockList from "./BlockList.js";
 
-export default {
+export {
   DisconnectMeEvaluator,
   DisconnectMeParser,
   AdBlockEvaluator,
