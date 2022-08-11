@@ -7,7 +7,7 @@
     "example": "example"
   },
   "scripts": {
-    "build": "npx webpack --config webpack.config.js --env mode='production'",
+    "build": "npx webpack --config webpack.config.js --env mode=production",
     "dev": "npx webpack --watch --config webpack.config.js"
   },
   "repository": {
