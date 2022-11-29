@@ -8,6 +8,6 @@ export default function() {
       engine = await FiltersEngine.fromLists(fetch, [ list]);
     },
 
-    engine: () => engine
+    engine: () => engine // TODO: what if parse() hasn't been completed yet?
   };
 };
