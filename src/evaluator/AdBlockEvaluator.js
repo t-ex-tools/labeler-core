@@ -10,7 +10,7 @@ export default function(mParser) {
       const result = parser.engine().match(Request.fromRawDetails({
         type: params.type,
         url: params.url,
-        sourceUrl: params.domain
+        sourceUrl: params.initiator
       }));
 
       return {
