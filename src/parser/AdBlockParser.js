@@ -5,9 +5,11 @@ export default function() {
   
   return {
     parse: async (list) => {
-      engine = await FiltersEngine.fromLists(fetch, [ list]);
+      engine = await FiltersEngine.fromLists(fetch, [ list ]);
     },
 
-    engine: () => engine // TODO: what if parse() hasn't been completed yet?
+    // NOTE:  applications must call init() on BlockList() instance
+    //        to ensure engine is fetched, parsed, and ready-to-go
+    engine: () => engine
   };
 };
