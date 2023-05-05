@@ -31,11 +31,7 @@ export default function () {
         .catch((err) => console.error(err));
     },
 
-    rule: (domain) => {
-      return Object
-        .keys(rules)
-        .filter((category) => rules[category][domain])
-    }
+    rules: () => rules,
   };
 
 };

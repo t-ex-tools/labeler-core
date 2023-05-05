@@ -10,6 +10,7 @@ export default function(mParser) {
   };
 
   return {
+
     parser: () => parser,
 
     isLabeled: (params) => {
@@ -32,17 +33,15 @@ export default function(mParser) {
       }
       */
 
-      let res = Object
-        .keys(parser.rules())
-        .filter((category) => parser.rules()[category][target]);
-      
+      let res = parser.rules()[target];
+        
       // TODO: unify response format with adblock
       return {
-        isLabeled: res.length > 0,
-        rule: (res.length > 0) ? target : undefined,
-        type: res,
+        isLabeled: (res) ? true : false,
+        rule: (res) ? target : null,
+        type: "hostname",
       };
     }
-  };
 
+  };
 };
