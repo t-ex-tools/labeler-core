@@ -8,16 +8,18 @@ export default function() {
     parse: async (url) => {
 
       if (url.startsWith('https://')) {
-        console.log("baa")
         engine = await FiltersEngine.fromLists(fetch, [ url ]);
-        console.log("engine done")
+
       } else if (url.startsWith('file://')) {
         let path = url.split('file://').pop();
         let list = fs.readFileSync(path, 'utf-8');
         engine = FiltersEngine.parse(list);
+
       } else {
         console.error('Could not resolve URL: ' + url);
+
       }
+      
     },
 
     // NOTE:  applications must call init() on BlockList() instance
