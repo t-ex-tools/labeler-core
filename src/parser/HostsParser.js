@@ -11,6 +11,7 @@ export default function () {
 
   return {
     
+    // TODO: url might reference a local resource?
     parse: (url) => {
       fetch(url)
         .then((res) => res.text())

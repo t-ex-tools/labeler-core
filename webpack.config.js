@@ -1,4 +1,5 @@
 const path = require("path");
+const fs = require("fs");
 
 module.exports = (env) => {
 
@@ -9,9 +10,12 @@ module.exports = (env) => {
       library: {
         name: "Labeler",
         type: "commonjs2"
-      },
+      }
     }
   };
+
+  let nodeConfig = Object.assign({ target: "node" }, moduleConfig);
+  nodeConfig.output.filename = "labeler-core.node.js";
   
   let varConfig = {
     output: {
@@ -33,11 +37,17 @@ module.exports = (env) => {
     optimization: {
       minimize: (env.mode === "production")
     },
+    resolve: {
+      fallback: {
+        fs: false
+      }
+    }
   };
 
   return [
     Object.assign({ ...config }, moduleConfig),
     Object.assign({ ...config }, varConfig),
+    Object.assign({ ...config }, nodeConfig),
   ];
 
 };
