@@ -21,13 +21,13 @@
   },
   "homepage": "https://github.com/t-ex-tools/labeler-core#readme",
   "devDependencies": {
-    "webpack": "^5.72.1",
-    "webpack-cli": "^4.9.2"
+    "webpack": "^5.106.2",
+    "webpack-cli": "^7.0.2"
   },
   "dependencies": {
-    "@cliqz/adblocker": "^1.23.8",
-    "tldjs": "^2.3.1",
-    "url": "^0.11.0",
-    "validator": "^13.7.0"
+    "@cliqz/adblocker": "^1.34.0",
+    "tldjs": "^2.3.2",
+    "url": "^0.11.4",
+    "validator": "^13.15.35"
   }
 }
